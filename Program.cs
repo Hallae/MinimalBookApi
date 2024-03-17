@@ -64,6 +64,19 @@ app.MapPut("/book/{id}", (Book bookupdated,int id) =>
     book.Author= bookupdated.Author;
     return Results.Ok(book);
 });
+
+
+app.MapDelete("/book/{id}", ( int id) =>
+{
+    var book = books.Find(b => b.Id == id);
+    if (book is null)
+
+        return Results.NotFound("No Book found!");
+
+
+    books.Remove(book);
+    return Results.Ok(book);
+});
 app.Run();
 
 class Book
