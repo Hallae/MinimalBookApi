@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http.HttpResults;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -30,6 +32,17 @@ app.MapGet("/book", () =>
 {
     return books;
 });
+
+app.MapGet("/book/{id}", (int id) =>
+{
+    var book= books.Find(b=> b.Id == id);
+    if (book is null) 
+        
+        return Results.NotFound("No Books found!");
+
+    return Results.Ok(book);
+});
+
 app.Run();
 
 class Book
